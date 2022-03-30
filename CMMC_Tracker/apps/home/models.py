@@ -42,6 +42,7 @@ STATUS_CHOICES = (
 
 
 class Organization(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100, default = None)
     description = models.CharField(max_length=500, default = None)
     cui_description = models.CharField(max_length=500, default = None)
@@ -52,7 +53,7 @@ class Organization(models.Model):
     )
 
     def __str__(self):
-        return self.name, self.description, self.cui_description, self.level
+        return self.name
 
 
 class Controls(models.Model):
@@ -77,14 +78,14 @@ class Controls(models.Model):
     notes = models.CharField(max_length=500, default = None)
 
     def __str__(self):
-        return self.organization, self.control_id, self.level, self.family, self.description, self.status, self.notes
+        return self.control_id
 
 
 class Users(models.Model):
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, default = None)
-    username = models.CharField(max_length=50, default = None)
-    password = models.CharField(max_length=30, default = None)
-    email = models.CharField(max_length=50, default = None)
+     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, default = None)
+     username = models.CharField(max_length=50, default = None)
+     password = models.CharField(max_length=30, default = None)
+     email = models.CharField(max_length=50, default = None)
 
-    def __str__(self):
-        return self.organization, self.username, self.password, self.email
+     def __str__(self):
+         return self.username
