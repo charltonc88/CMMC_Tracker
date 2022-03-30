@@ -40,21 +40,24 @@ STATUS_CHOICES = (
     ("non-applicable", "Non-Applicable"),
 )
 
+
 class Organization(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
-    cui_description = models.CharField(max_length=500)
+    name = models.CharField(max_length=100, default = None)
+    description = models.CharField(max_length=500, default = None)
+    cui_description = models.CharField(max_length=500, default = None)
     level = models.CharField(
         max_length=3,
         choices = LEVEL_CHOICES,
         default = '2'
     )
 
+    def __str__(self):
+        return self.name, self.description, self.cui_description, self.level
 
 
 class Controls(models.Model):
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    control_id = models.CharField(max_length=15)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, default = None)
+    control_id = models.CharField(max_length=15, default = None)
     level = models.CharField(
         max_length=3,
         choices = LEVEL_CHOICES,
@@ -63,22 +66,25 @@ class Controls(models.Model):
     family = models.CharField(
         max_length=100,
         choices = FAMILY_CHOICES,
-        default = 'asset_management'
+        default = None
     )
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=500, default = None)
     status = models.CharField(
         max_length=25,
         choices = STATUS_CHOICES,
         default = 'Non-Compliant'
     )
-    notes = models.CharField(max_length=500)
+    notes = models.CharField(max_length=500, default = None)
 
     def __str__(self):
-        return self.control_id
+        return self.organization, self.control_id, self.level, self.family, self.description, self.status, self.notes
+
 
 class Users(models.Model):
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=30)
-    email = models.CharField(max_length=50)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, default = None)
+    username = models.CharField(max_length=50, default = None)
+    password = models.CharField(max_length=30, default = None)
+    email = models.CharField(max_length=50, default = None)
 
+    def __str__(self):
+        return self.organization, self.username, self.password, self.email
