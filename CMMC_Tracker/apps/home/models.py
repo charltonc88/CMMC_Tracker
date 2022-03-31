@@ -13,6 +13,8 @@ LEVEL_CHOICES = (
     ("1", "1"),
     ("2", "2"),
     ("3", "3"),
+    ("4", "4"),
+    ("5", "5"),
 )
 
 FAMILY_CHOICES = (
@@ -49,20 +51,20 @@ class Organization(models.Model):
     level = models.CharField(
         max_length=3,
         choices = LEVEL_CHOICES,
-        default = '2'
+        default = '3'
     )
 
     def __str__(self):
         return self.name
 
 
-class Controls(models.Model):
+class Control(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, default = None)
     control_id = models.CharField(max_length=15, default = None)
     level = models.CharField(
         max_length=3,
         choices = LEVEL_CHOICES,
-        default = '2'
+        default = '3'
     )
     family = models.CharField(
         max_length=100,
