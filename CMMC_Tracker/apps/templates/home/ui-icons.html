@@ -33,8 +33,8 @@
                       <th>Actions</th>
                   </tr>
               </thead>
-              <tbody>
-                {% for control in controls %}
+              <tbody id="tbody-container">
+                <!-- {% for control in controls %}
                 <tr>
                   <td> {{ control.control_id }}</td>
                   <td> {{ control.family }}</td>
@@ -46,7 +46,7 @@
                     <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                   </td>
                 </tr>
-                {% endfor %}
+                {% endfor %} -->
               </tbody>
             </table>
         </div>
@@ -58,8 +58,60 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
   <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    buildTable()
+
+    function buildTable(){
+      var container = document.getElementById('tbody-container')
+      container.innerHTML = ''
+
+      var url = 'http://127.0.0.1:8000/api/controls-overview/'
+
+      fetch(url)
+      .then((resp) => resp.json())
+      .then(function(data){
+        console.log('Data:', data)
+
+        var list = data
+        for(var i in list){
+
+          var item = `
+            <tr>
+              <td>${list[i].control_id}</td>
+              <td>${list[i].family}</td>
+              <td>${list[i].description}</td>
+              <td>${list[i].level}</td>
+              <td>${list[i].status}</td>
+              <td>${list[i].notes}</td>
+              <td><button class="btn btn-sm btn-outline-info edit">Edit </button></td>
+            </tr>
+          `
+
+          container.innerHTML += item
+
+        }
+      })
+    }
+
+
+
   </script>
+
 {% endblock javascripts %}
