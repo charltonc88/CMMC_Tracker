@@ -3,11 +3,15 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+from curses.ascii import HT
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from .models import Organization, Control
+
+
 
 
 @login_required(login_url="/login/")
@@ -16,7 +20,6 @@ def index(request):
 
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
-
 
 @login_required(login_url="/login/")
 def pages(request):
@@ -29,7 +32,14 @@ def pages(request):
 
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
+        elif load_template == 'api':
+            return HttpResponseRedirect(reverse('api:'))
         context['segment'] = load_template
+
+        org = Organization.objects.get(name="Master Org")
+        controls = org.control_set.all()
+        context['org'] = org
+        context['controls'] = controls
 
         html_template = loader.get_template('home/' + load_template)
         return HttpResponse(html_template.render(context, request))
