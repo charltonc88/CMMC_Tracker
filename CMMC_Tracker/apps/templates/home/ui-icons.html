@@ -51,7 +51,35 @@
             </table>
         </div>
   </div>
-</div>
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="modal-body" class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <div class="modal-container" id="modal-container-popup">
+    <div id="modal" class="modal-popup">
+
+      <button id="save" class="btn btn-sm btn-outline-info save">Save</button>
+    </div>
+  </div> -->
 
 {% endblock content %}
 
@@ -74,9 +102,65 @@
         }
         return cookieValue;
     }
+
     const csrftoken = getCookie('csrftoken');
+    var activeItem = null;
+    var popupWindow = null;
+
+    // const edit = document.getElementsByClassName('edit');
+    const modal_container = document.getElementById('modal-container-popup');
+    
 
     buildTable()
+
+    function createPopup(item){
+      var title_container = document.getElementById('exampleModalCenterTitle')
+      title_container.innerHTML = ''
+
+      var container = document.getElementById('modal-body')
+      container.innerHTML = ''
+
+      var url = `http://127.0.0.1:8000/api/control-view/${item}/`
+
+      fetch(url)
+      .then((resp) => resp.json())
+      .then(function(data){
+        console.log('Data', data)
+        
+        var list = data
+
+        title_container.innerHTML += list.control_id
+
+        var code = `
+        <form>
+          <div class="form-group row">
+            <label for="controlStatus" class="col-sm-2 col-form-label">Status</label>
+            <div class="col-sm-10">
+              <select id="controlStatus" class="form-control">
+                <option selected>${list.level}</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="notes" class="col-sm-2 col-form-label">Notes</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="notes" placeholder="${list.notes}">
+            </div>
+          </div>
+        </form>
+        `
+        container.innerHTML += code
+
+      })
+
+      modal_container.classList.add('show');
+
+    }
 
     function buildTable(){
       var container = document.getElementById('tbody-container')
@@ -100,16 +184,43 @@
               <td>${list[i].level}</td>
               <td>${list[i].status}</td>
               <td>${list[i].notes}</td>
-              <td><button class="btn btn-sm btn-outline-info edit">Edit </button></td>
+              <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
             </tr>
           `
-
           container.innerHTML += item
+          var last = list[i].control_id
 
+        }
+
+        for (var i in list){
+          var editBtn = document.getElementsByClassName('edit')[i]
+
+          editBtn.addEventListener('click', (function(item){
+            return function(){
+              editItem(item)
+            }
+          })(list[i].control_id))
         }
       })
     }
 
+    function editItem(item){
+      console.log('Item Clicked', item);
+      activeItem = item
+      createPopup(activeItem);
+    }
+
+
+    const save = document.getElementById('save');
+
+    save.addEventListener('click', () => {
+      modal_container.classList.remove('show');
+    });
+
+
+    // edit.addEventListener('click', () => {
+    //   modal_container.classList.add('show');
+    //  });
 
 
   </script>
