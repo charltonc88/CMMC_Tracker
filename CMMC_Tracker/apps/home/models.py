@@ -17,29 +17,30 @@ LEVEL_CHOICES = (
     ("5", "5"),
 )
 
+
 FAMILY_CHOICES = (
-    ("access_control", "Access Control (AC)"),
-    ("identification_and_authentication", "Identification and Authentication (IDA)"),
-    ("media_protection", "Media Protection (MP)"),
-    ("physical_protection", "Physical Protection (PP)"),
-    ("system_and_communications_protection", "System and Communications Protection (SCP)"),
-    ("system_and_information_integrity", "System and Information Integrity (SII)"),
-    ("awareness_and_training", "Awareness and Training (AT)"),
-    ("audit_and_accountability", "Audit and Accountability (AA)"),
-    ("secureity_assessment", "Security Assessment (SAS)"),
-    ("configuration_management", "Configuration Management (CM)"),
-    ("incident_response", "Incident Response (IA)"),
-    ("maintenance", "Maintenance (MA)"),
-    ("personnel_security", "Personnel Security (PS)"),
-    ("recovery", "Recovery (RE)"),
-    ("risk_management", "Risk Management (RM)"),
-    ("asset_management", "Asset Management (AM)"),
+    ("Access Control (AC)", "Access Control (AC)"),
+    ("Identification and Authentication (IDA)", "Identification and Authentication (IDA)"),
+    ("Media Protection (MP)", "Media Protection (MP)"),
+    ("Physical Protection (PP)", "Physical Protection (PP)"),
+    ("System and Communications Protection (SCP)", "System and Communications Protection (SCP)"),
+    ("System and Information Integrity (SII)", "System and Information Integrity (SII)"),
+    ("Awareness and Training (AT)", "Awareness and Training (AT)"),
+    ("Audit and Accountability (AA)", "Audit and Accountability (AA)"),
+    ("Security Assessment (SAS)", "Security Assessment (SAS)"),
+    ("Configuration Management (CM)", "Configuration Management (CM)"),
+    ("Incident Response (IA)", "Incident Response (IA)"),
+    ("Maintenance (MA)", "Maintenance (MA)"),
+    ("Personnel Security (PS)", "Personnel Security (PS)"),
+    ("Recovery (RE)", "Recovery (RE)"),
+    ("Risk Management (RM)", "Risk Management (RM)"),
+    ("Asset Management (AM)", "Asset Management (AM)"),
 )
 
 STATUS_CHOICES = (
-    ("non-compliant", "Non-Compliant"),
-    ("compliant", "Compliant"),
-    ("non-applicable", "Non-Applicable"),
+    ("Non-Compliant", "Non-Compliant"),
+    ("Compliant", "Compliant"),
+    ("Non-Applicable", "Non-Applicable"),
 )
 
 
@@ -56,6 +57,7 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 class Control(models.Model):
@@ -81,6 +83,12 @@ class Control(models.Model):
 
     def __str__(self):
         return self.control_id
+
+    def get_status(self):
+        return self.status
+    
+    def get_choices(self):
+        return STATUS_CHOICES
 
 
 class Users(models.Model):

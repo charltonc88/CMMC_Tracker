@@ -9,6 +9,9 @@ from rest_framework.response import Response
 from apps.home.serializers import OrganizationSerializer, ControlSerializer
 from apps.home.models import Organization, Control
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -44,7 +47,7 @@ def control_view(request, pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
-def update_control(request, pk):
+def control_update(request, pk):
     org = Organization.objects.get(name="Master Org")
     controls = org.control_set.all()
     control = controls.get(control_id=pk)
@@ -52,6 +55,8 @@ def update_control(request, pk):
     serializer = ControlSerializer(instance=control, data=request.data)
 
     if serializer.is_valid():
+        print("I MADE IT")
         serializer.save()
+    print(serializer.errors)
 
     return Response(serializer.data)

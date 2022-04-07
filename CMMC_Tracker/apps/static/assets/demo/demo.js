@@ -490,6 +490,18 @@ demo = {
     gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
     gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
 
+    // var url = 'http://127.0.0.1:8000/api/controls-overview/'
+    // var controls_list
+    //   fetch(url)
+    //   .then((resp) => resp.json())
+    //   .then(function(data){
+    //     console.log('Data:', data)
+
+    //     controls_list = data
+    //   })
+
+    //   ac = controls_list.filter({'family':'Access Control (AC)'}, 'status','Non-Compliant')
+    //   console.log(ac)
 
     var myChart = new Chart(ctx, {
       type: 'bar',
@@ -498,7 +510,7 @@ demo = {
         display: false
       },
       data: {
-        labels: ['USA', 'GER', 'AUS', 'UK', 'RO', 'BR'],
+        labels: ['(AC)', '(IDA)', '(MP)', '(PP)', '(SCP)', '(SII)', '(AT)', '(AA)', '(SAS)', '(CM)', '(IA)', '(MA)', '(PS)', '(RE)', '(RM)', '(AM)'],
         datasets: [{
           label: "Countries",
           fill: true,
@@ -508,7 +520,7 @@ demo = {
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: [53, 20, 10, 80, 100, 45],
+          data: [1053, 20, 10, 80, 100, 45],
         }]
       },
       options: gradientBarChartConfiguration

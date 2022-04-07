@@ -1389,7 +1389,7 @@ pre {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.42857;
-  color: rgba(255, 255, 255, 0.8);
+  color: #000;
   background-color: transparent;
   background-clip: padding-box;
   border: 1px solid #cad1d7;
@@ -1403,7 +1403,7 @@ pre {
     background-color: transparent;
     border: 0; }
   .form-control:focus {
-    color: rgba(255, 255, 255, 0.8);
+    color: #000;
     background-color: #ffffff;
     border-color: rgba(50, 151, 211, 0.25);
     outline: 0;
@@ -1414,6 +1414,7 @@ pre {
   .form-control:disabled, .form-control[readonly] {
     background-color: #e9ecef;
     opacity: 1; }
+
 
 select.form-control:focus::-ms-value {
   color: rgba(255, 255, 255, 0.8);
@@ -13363,7 +13364,7 @@ Copyright (c) 2015 Daniel Eden
 
 /* Changes by Caden */
 
-.pagination li a {
+/* .pagination li a {
   border: none;
   font-size: 95%;
   width: 30px;
@@ -13466,7 +13467,6 @@ border-color: #3FBAE4;
   .table-title h2 {
       margin: 8px 0 0;
       font-size: 22px;
-  }
 
   .model-container{
     background-color: rgba(0, 0, 0, 0.3);
@@ -13504,3 +13504,4 @@ border-color: #3FBAE4;
   .modal p {
     opacity: 0.7;
   }
+  */
