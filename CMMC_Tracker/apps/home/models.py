@@ -35,6 +35,7 @@ FAMILY_CHOICES = (
     ("Recovery (RE)", "Recovery (RE)"),
     ("Risk Management (RM)", "Risk Management (RM)"),
     ("Asset Management (AM)", "Asset Management (AM)"),
+    ("Situational Awareness (SA)","Situational Awareness (SA)"),
 )
 
 STATUS_CHOICES = (

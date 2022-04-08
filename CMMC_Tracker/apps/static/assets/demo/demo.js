@@ -327,8 +327,8 @@ demo = {
             zeroLineColor: "transparent",
           },
           ticks: {
-            suggestedMin: 60,
-            suggestedMax: 120,
+            suggestedMin: 0,
+            suggestedMax: 30,
             padding: 20,
             fontColor: "#9e9e9e"
           }
@@ -349,183 +349,357 @@ demo = {
       }
     };
 
-    var ctx = document.getElementById("chartLinePurple").getContext("2d");
+    // var ctx = document.getElementById("chartLinePurple").getContext("2d");
 
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+    // var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
-    gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+    // gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
+    // gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    // gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
-    var data = {
-      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-      datasets: [{
-        label: "Data",
-        fill: true,
-        backgroundColor: gradientStroke,
-        borderColor: '#d048b6',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#d048b6',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#d048b6',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: [80, 100, 70, 80, 120, 80],
-      }]
-    };
+    // var data = {
+    //   labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+    //   datasets: [{
+    //     label: "Data",
+    //     fill: true,
+    //     backgroundColor: gradientStroke,
+    //     borderColor: '#d048b6',
+    //     borderWidth: 2,
+    //     borderDash: [],
+    //     borderDashOffset: 0.0,
+    //     pointBackgroundColor: '#d048b6',
+    //     pointBorderColor: 'rgba(255,255,255,0)',
+    //     pointHoverBackgroundColor: '#d048b6',
+    //     pointBorderWidth: 20,
+    //     pointHoverRadius: 4,
+    //     pointHoverBorderWidth: 15,
+    //     pointRadius: 4,
+    //     data: [80, 100, 70, 80, 120, 80],
+    //   }]
+    // };
 
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: data,
-      options: gradientChartOptionsConfigurationWithTooltipPurple
-    });
-
-
-    var ctxGreen = document.getElementById("chartLineGreen").getContext("2d");
-
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(66,134,121,0.15)');
-    gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)'); //green colors
-    gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
-
-    var data = {
-      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV'],
-      datasets: [{
-        label: "My First dataset",
-        fill: true,
-        backgroundColor: gradientStroke,
-        borderColor: '#00d6b4',
-        borderWidth: 2,
-        borderDash: [],
-        borderDashOffset: 0.0,
-        pointBackgroundColor: '#00d6b4',
-        pointBorderColor: 'rgba(255,255,255,0)',
-        pointHoverBackgroundColor: '#00d6b4',
-        pointBorderWidth: 20,
-        pointHoverRadius: 4,
-        pointHoverBorderWidth: 15,
-        pointRadius: 4,
-        data: [90, 27, 60, 12, 80],
-      }]
-    };
-
-    var myChart = new Chart(ctxGreen, {
-      type: 'line',
-      data: data,
-      options: gradientChartOptionsConfigurationWithTooltipGreen
-
-    });
+    // var myChart = new Chart(ctx, {
+    //   type: 'line',
+    //   data: data,
+    //   options: gradientChartOptionsConfigurationWithTooltipPurple
+    // });
 
 
+    // var ctxGreen = document.getElementById("chartLineGreen").getContext("2d");
 
-    var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
+    // var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
+    // gradientStroke.addColorStop(1, 'rgba(66,134,121,0.15)');
+    // gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)'); //green colors
+    // gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
 
-    var ctx = document.getElementById("chartBig1").getContext('2d');
+    // var data = {
+    //   labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV'],
+    //   datasets: [{
+    //     label: "My First dataset",
+    //     fill: true,
+    //     backgroundColor: gradientStroke,
+    //     borderColor: '#00d6b4',
+    //     borderWidth: 2,
+    //     borderDash: [],
+    //     borderDashOffset: 0.0,
+    //     pointBackgroundColor: '#00d6b4',
+    //     pointBorderColor: 'rgba(255,255,255,0)',
+    //     pointHoverBackgroundColor: '#00d6b4',
+    //     pointBorderWidth: 20,
+    //     pointHoverRadius: 4,
+    //     pointHoverBorderWidth: 15,
+    //     pointRadius: 4,
+    //     data: [90, 27, 60, 12, 80],
+    //   }]
+    // };
 
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+    // var myChart = new Chart(ctxGreen, {
+    //   type: 'line',
+    //   data: data,
+    //   options: gradientChartOptionsConfigurationWithTooltipGreen
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
-    var config = {
-      type: 'line',
-      data: {
-        labels: chart_labels,
-        datasets: [{
-          label: "My First dataset",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: chart_data,
-        }]
-      },
-      options: gradientChartOptionsConfigurationWithTooltipPurple
-    };
-    var myChartData = new Chart(ctx, config);
-    $("#0").click(function() {
-      var data = myChartData.config.data;
-      data.datasets[0].data = chart_data;
-      data.labels = chart_labels;
-      myChartData.update();
-    });
-    $("#1").click(function() {
-      var chart_data = [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120];
-      var data = myChartData.config.data;
-      data.datasets[0].data = chart_data;
-      data.labels = chart_labels;
-      myChartData.update();
-    });
-
-    $("#2").click(function() {
-      var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];
-      var data = myChartData.config.data;
-      data.datasets[0].data = chart_data;
-      data.labels = chart_labels;
-      myChartData.update();
-    });
+    // });
 
 
-    var ctx = document.getElementById("CountryChart").getContext("2d");
 
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+    // var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    // var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
 
-    gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
-    gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
 
-    // var url = 'http://127.0.0.1:8000/api/controls-overview/'
-    // var controls_list
-    //   fetch(url)
-    //   .then((resp) => resp.json())
-    //   .then(function(data){
-    //     console.log('Data:', data)
+    // var ctx = document.getElementById("chartBig1").getContext('2d');
 
-    //     controls_list = data
-    //   })
+    // var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    //   ac = controls_list.filter({'family':'Access Control (AC)'}, 'status','Non-Compliant')
-    //   console.log(ac)
+    // gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    // gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    // gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+    // var config = {
+    //   type: 'line',
+    //   data: {
+    //     labels: chart_labels,
+    //     datasets: [{
+    //       label: "My First dataset",
+    //       fill: true,
+    //       backgroundColor: gradientStroke,
+    //       borderColor: '#d346b1',
+    //       borderWidth: 2,
+    //       borderDash: [],
+    //       borderDashOffset: 0.0,
+    //       pointBackgroundColor: '#d346b1',
+    //       pointBorderColor: 'rgba(255,255,255,0)',
+    //       pointHoverBackgroundColor: '#d346b1',
+    //       pointBorderWidth: 20,
+    //       pointHoverRadius: 4,
+    //       pointHoverBorderWidth: 15,
+    //       pointRadius: 4,
+    //       data: chart_data,
+    //     }]
+    //   },
+    //   options: gradientChartOptionsConfigurationWithTooltipPurple
+    // };
+    // var myChartData = new Chart(ctx, config);
+    // $("#0").click(function() {
+    //   var data = myChartData.config.data;
+    //   data.datasets[0].data = chart_data;
+    //   data.labels = chart_labels;
+    //   myChartData.update();
+    // });
+    // $("#1").click(function() {
+    //   var chart_data = [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120];
+    //   var data = myChartData.config.data;
+    //   data.datasets[0].data = chart_data;
+    //   data.labels = chart_labels;
+    //   myChartData.update();
+    // });
 
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      responsive: true,
-      legend: {
-        display: false
-      },
-      data: {
-        labels: ['(AC)', '(IDA)', '(MP)', '(PP)', '(SCP)', '(SII)', '(AT)', '(AA)', '(SAS)', '(CM)', '(IA)', '(MA)', '(PS)', '(RE)', '(RM)', '(AM)'],
-        datasets: [{
-          label: "Countries",
-          fill: true,
-          backgroundColor: gradientStroke,
-          hoverBackgroundColor: gradientStroke,
-          borderColor: '#1f8ef1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data: [1053, 20, 10, 80, 100, 45],
-        }]
-      },
-      options: gradientBarChartConfiguration
-    });
+    // $("#2").click(function() {
+    //   var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];
+    //   var data = myChartData.config.data;
+    //   data.datasets[0].data = chart_data;
+    //   data.labels = chart_labels;
+    //   myChartData.update();
+    // });
 
+
+    var url = 'http://127.0.0.1:8000/api/controls-overview/'
+      fetch(url)
+      .then((resp) => resp.json())
+      .then(function(data){
+        console.log('Data:', data)
+        var ctx = document.getElementById("CountryChart").getContext("2d");
+
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+        gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+        controls_list = data
+        arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        arr_level1 = [0, 0]
+        arr_level3 = [0, 0]
+        arr_level5 = [0, 0]
+
+        for(var i in controls_list){
+          if (controls_list[i].family.includes("(AC)")){
+            if (controls_list[i].status == "Non-Compliant")
+              arr[0] +=1;
+          } else if (controls_list[i].family.includes("(IDA)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[1] +=1;
+          } else if (controls_list[i].family.includes("(MP)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[2] +=1;
+          } else if (controls_list[i].family.includes("(PP)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[3] +=1;
+          } else if (controls_list[i].family.includes("(SCP)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[4] +=1;
+          } else if (controls_list[i].family.includes("(SII)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[5] +=1;
+          } else if (controls_list[i].family.includes("(AT)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[6] +=1;
+          } else if (controls_list[i].family.includes("(AA)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[7] +=1;
+          } else if (controls_list[i].family.includes("(SAS)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[8] +=1;
+          } else if (controls_list[i].family.includes("(CM)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[9] +=1;
+          } else if (controls_list[i].family.includes("(IA)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[10] +=1;
+          } else if (controls_list[i].family.includes("(MA)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[11] +=1;
+          } else if (controls_list[i].family.includes("(PS)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[12] +=1;
+          } else if (controls_list[i].family.includes("(RE)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[13] +=1;
+          } else if (controls_list[i].family.includes("(RM)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[14] +=1;
+          } else if (controls_list[i].family.includes("(AM)")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[15] +=1;
+          } else if (controls_list[i].control_id.includes("SA")){
+              if (controls_list[i].status == "Non-Compliant")
+                arr[16] +=1;
+          } 
+
+        }   
+
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          responsive: true,
+          legend: {
+            display: false
+          },
+          data: {
+            labels: ['(AC)', '(IDA)', '(MP)', '(PP)', '(SCP)', '(SII)', '(AT)', '(AA)', '(SAS)', '(CM)', '(IA)', '(MA)', '(PS)', '(RE)', '(RM)', '(AM)', '(SA)'],
+            datasets: [{
+              label: "Non-Compliant Controls",
+              fill: true,
+              backgroundColor: gradientStroke,
+              hoverBackgroundColor: gradientStroke,
+              borderColor: '#1f8ef1',
+              borderWidth: 2,
+              borderDash: [],
+              borderDashOffset: 0.0,
+              data: [arr[0], arr[1], arr[2], arr[3], arr[4],arr[5], arr[6], arr[7], arr[8], arr[9],arr[10], arr[11], arr[12], arr[13], arr[14],arr[15], arr[16]],
+            }]
+          },
+          options: gradientBarChartConfiguration,
+        });
+        
+
+
+      })
+
+      var url = 'http://127.0.0.1:8000/api/controls-overview/'
+      fetch(url)
+      .then((resp) => resp.json())
+      .then(function(data){
+        console.log('Data:', data)
+
+        controls_list = data
+
+        arr_level1 = [0, 0, 0]
+        arr_level3 = [0, 0, 0]
+        arr_level5 = [0, 0, 0]
+
+        for(var i in controls_list){
+        if (controls_list[i].level == '1'){
+            if (controls_list[i].status == "Compliant")
+              arr_level1[0] +=1
+            else if (controls_list[i].status == "Non-Applicable"){
+              arr_level1[2] +=1
+            }
+            else
+              arr_level1[1] +=1
+          } else if (controls_list[i].level == '3'){
+              if (controls_list[i].status == "Compliant")
+                arr_level3[0] +=1
+              else if (controls_list[i].status == "Non-Applicable"){
+                arr_level3[2] +=1
+              }
+              else
+                arr_level3[1] +=1
+          } else if (controls_list[i].level == '5'){
+              if (controls_list[i].status == "Compliant")
+                arr_level5[0] +=1
+              else if (controls_list[i].status == "Non-Applicable"){
+                arr_level5[2] +=1
+              }
+              else
+                arr_level5[1] +=1
+            }
+      }
+
+        var ctxD1 = document.getElementById("doughnutChart1").getContext('2d');
+          
+        var gradientStroke = ctxD1.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+        gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+        var myLineChart1 = new Chart(ctxD1, {
+          type: 'doughnut',
+          data: {
+            labels: ["Compliant", "Non-Compliant", "Non-Applicable"],
+            datasets: [{
+              data: [arr_level1[0], arr_level1[1], arr_level1[2]],
+              backgroundColor: ["#33cc33","#F7464A", "#46BFBD"],
+              hoverBackgroundColor: ["#85e085", "#FF5A5E", "#5AD3D1"]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: false,
+          }
+        });
+
+        var ctxD2 = document.getElementById("doughnutChart2").getContext('2d');
+          
+        var gradientStroke = ctxD2.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+        gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+        var myLineChart2 = new Chart(ctxD2, {
+          type: 'doughnut',
+          data: {
+            labels: ["Compliant", "Non-Compliant"],
+            datasets: [{
+              data: [arr_level3[0], arr_level3[1], arr_level3[2]],
+              backgroundColor: ["#33cc33","#F7464A", "#46BFBD"],
+              hoverBackgroundColor: ["#85e085", "#FF5A5E", "#5AD3D1"]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: false,
+          }
+        });
+
+        var ctxD3 = document.getElementById("doughnutChart3").getContext('2d');
+
+        var gradientStroke = ctxD3.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+        gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+        var myLineChart3 = new Chart(ctxD3, {
+          type: 'doughnut',
+          data: {
+            labels: ["Compliant", "Non-Compliant"],
+            datasets: [{
+              data: [arr_level5[0], arr_level5[1], arr_level5[2]],
+              backgroundColor: ["#33cc33","#F7464A", "#46BFBD"],
+              hoverBackgroundColor: ["#85e085", "#FF5A5E", "#5AD3D1"]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: false,
+          }
+        });
+
+      })
   },
 
   initGoogleMaps: function() {
