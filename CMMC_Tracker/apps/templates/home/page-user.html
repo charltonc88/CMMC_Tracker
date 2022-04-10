@@ -161,7 +161,7 @@
 
     var container = document.getElementById('org-form')
 
-    var url = 'http://127.0.0.1:8000/api/org-overview/'
+    var url = 'http://164.92.68.77:85/api/org-overview/'
 
     fetch(url)
     .then((resp) => resp.json())
@@ -177,7 +177,7 @@
 
     submit.addEventListener('click', () => {
 
-      var url = `http://127.0.0.1:8000/api/organization-update/`
+      var url = `http://164.92.68.77:85/api/organization-update/`
 
       var name = document.getElementById('org-name').value;
       var description = document.getElementById('cui-description').value;
@@ -199,7 +199,7 @@
         modalPopup()
       })
 
-      var url = `http://127.0.0.1:8000/api/userprofile-update/`
+      var url = `http://164.92.68.77:85/api/userprofile-update/`
 
       fetch(url, {
         method: 'POST',
