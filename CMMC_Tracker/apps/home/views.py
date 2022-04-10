@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from .models import Organization, Control
+from .filters import ControlsFilter
 
 
 
@@ -36,10 +37,13 @@ def pages(request):
             return HttpResponseRedirect(reverse('api:'))
         context['segment'] = load_template
 
-        org = Organization.objects.get(name="Master Org")
-        controls = org.control_set.all()
-        context['org'] = org
-        context['controls'] = controls
+        # org = Organization.objects.get(name=request.user.userprofile.organization.name)
+        # controls = org.control_set.all()
+        # context['org'] = org
+        # context['controls'] = controls
+
+        # myFilter = ControlsFilter()
+        # context['myFilter'] = myFilter
 
         html_template = loader.get_template('home/' + load_template)
         return HttpResponse(html_template.render(context, request))

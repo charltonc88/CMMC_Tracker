@@ -14,24 +14,24 @@
         <h5 class="title">Edit Profile</h5>
       </div>
       <div class="card-body">
-        <form>
+        <form id="org-form">
           <div class="row">
-            <div class="col-md-5 pr-md-1">
+            <div class="col-md-4 pr-md-1">
               <div class="form-group">
-                <label>UserID (disabled)</label>
+                <label>User ID</label>
                 <input type="text" class="form-control" disabled="" value="{{ request.user.id }}">
               </div>
             </div>
-            <div class="col-md-3 px-md-1">
+            <div class="col-md-4 px-md-1">
               <div class="form-group">
                 <label>Username</label>
-                <input type="text" class="form-control" value="{{ request.user.username }}">
+                <input type="text" class="form-control" disabled="" value="{{ request.user.username }}">
               </div>
             </div>
             <div class="col-md-4 pl-md-1">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" value="{{ request.user.email }}">
+                <input type="email" class="form-control" disabled="" value="{{ request.user.email }}">
               </div>
             </div>
           </div>
@@ -39,56 +39,55 @@
             <div class="col-md-6 pr-md-1">
               <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control" placeholder="Company" value="Mike">
+                <input type="text" class="form-control" disabled="" placeholder="First Name" value="{{ request.user.first_name }}">
               </div>
             </div>
             <div class="col-md-6 pl-md-1">
               <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Address</label>
-                <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                <input type="text" class="form-control" disabled="" placeholder="Last Name" value="{{ request.user.last_name }}">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4 pr-md-1">
               <div class="form-group">
-                <label>City</label>
-                <input type="text" class="form-control" placeholder="City" value="Mike">
+                <label>Organization</label>
+                <input style="color: rgba(255, 255, 255, 0.6);" type="text" id="org-name" class="form-control" placeholder="Organization" value="{{ request.user.userprofile.organization.name }}">
               </div>
             </div>
             <div class="col-md-4 px-md-1">
               <div class="form-group">
-                <label>Country</label>
-                <input type="text" class="form-control" placeholder="Country" value="Andrew">
+                <label>User Role</label>
+                <input style="color: rgba(255, 255, 255, 0.6);" type="text" id="user-role" class="form-control" placeholder="CMMC Admin" value="{{ request.user.userprofile.role }}">
               </div>
             </div>
             <div class="col-md-4 pl-md-1">
               <div class="form-group">
-                <label>Postal Code</label>
-                <input type="number" class="form-control" placeholder="ZIP Code">
+                <label>CMMC Level</label>
+                <select style="color: rgba(255, 255, 255, 0.6);" id="cmmc-level" class="form-control">
+                  <option style="color: #000;" selected id="selected-level">{{ request.user.userprofile.organization.level }}</option>
+                  <option style="color: #000;" id="option1"></option>
+                  <option style="color: #000;" id="option2"></option>
+                  <option style="color: #000;" id="option3"></option>
+                  <option style="color: #000;" id="option4"></option>
+                </select>
               </div>
             </div>
           </div>
+
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="form-group">
-                <label>About Me</label>
-                <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                <label>CUI Description</label>
+                <textarea style="color: rgba(255, 255, 255, 0.6);" rows="4" cols="80" class="form-control" id="cui-description">{{ request.user.userprofile.organization.description }}</textarea>
               </div>
             </div>
           </div>
         </form>
       </div>
       <div class="card-footer">
-        <button type="submit" class="btn btn-fill btn-primary">Save</button>
+        <button type="submit" id="submit" class="btn btn-fill btn-primary">Save</button>
       </div>
     </div>
   </div>
@@ -140,6 +139,102 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
   <script>
-    
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+
+    var container = document.getElementById('org-form')
+
+    var url = 'http://127.0.0.1:8000/api/org-overview/'
+
+    fetch(url)
+    .then((resp) => resp.json())
+    .then(function(data){
+       console.log('Data:', data)
+
+      var org = data
+      
+    })
+
+
+    var submit = document.getElementById('submit');
+
+    submit.addEventListener('click', () => {
+
+      var url = `http://127.0.0.1:8000/api/organization-update/`
+
+      var name = document.getElementById('org-name').value;
+      var description = document.getElementById('cui-description').value;
+      var role = document.getElementById('user-role').value;
+      var level = document.getElementById('cmmc-level').value;
+      console.log(name)
+      console.log(description)
+      console.log(role)
+      console.log(level)
+
+      fetch(url, {
+        method: 'POST',
+        headers:{
+          'Content-type':'application/json',
+          'X-CSRFToken':csrftoken,
+        },
+        body:JSON.stringify({'name': name, 'description': description, 'level': level})
+      }).then(function(response){
+        modalPopup()
+      })
+
+      var url = `http://127.0.0.1:8000/api/userprofile-update/`
+
+      fetch(url, {
+        method: 'POST',
+        headers:{
+          'Content-type':'application/json',
+          'X-CSRFToken':csrftoken,
+        },
+        body:JSON.stringify({'role': role})
+      }).then(function(response){
+        
+      })
+      
+      alert("Success! The organization has been updated");
+    });
+
+
+
+    var level_arr = [1, 2, 3, 4, 5];
+    var selected = document.getElementById('selected-level')
+    var innerHTMLnum = selected.innerHTML
+    var int = parseFloat(innerHTMLnum)
+    var index = level_arr.indexOf(int);
+    console.log(index)
+    if (index > -1){
+      level_arr.splice(index, 1);
+    }
+
+    var option1 = document.getElementById('option1')
+    option1.innerHTML += level_arr[0]
+    var option2 = document.getElementById('option2')
+    option2.innerHTML += level_arr[1]
+    var option3 = document.getElementById('option3')
+    option3.innerHTML += level_arr[2]
+    var option4 = document.getElementById('option4')
+    option4.innerHTML += level_arr[3]
+
   </script>
 {% endblock javascripts %}

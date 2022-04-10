@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'apps.home',  # Enable the inner home (home)
     'rest_framework',
     'api.apps.ApiConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

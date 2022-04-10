@@ -12,13 +12,61 @@
           <div class="table-title">
               <div class="row">
                   <div class="col-sm-8"><h2>CMMC Controls</h2></div>
-                  <div class="col-sm-4">
-                      <div class="search-box">
-                          <i class="tim-icons icon-zoom-split text-info"></i>
-                          <input type="search" class="form-control search_input" placeholder="Search&hellip;" data-table="controls-list">
-                      </div>
-                  </div>
               </div>
+              <div class="row">
+                <div class="col-lg-12">
+                <form class="form-inline" onsubmit="return false">
+                  <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                      <label class="mr-sm-2" style="color: rgba(255, 255, 255, 0.6);" for="inlineFormCustomSelect">CMMC Level</label>
+                      <select class="custom-select mr-sm-2" id="cmmc-level-select">
+                        <option style="color: #000;" selected>All</option>
+                        <option style="color: #000;" value="1">1</option>
+                        <option style="color: #000;" value="2">2</option>
+                        <option style="color: #000;" value="3">3</option>
+                        <option style="color: #000;" value="4">4</option>
+                        <option style="color: #000;" value="5">5</option>
+                      </select>
+                    </div>
+                    <div class="col-auto my-1">
+                      <label class="mr-sm-2" style="color: rgba(255, 255, 255, 0.6);" for="inlineFormCustomSelect">CMMC Family</label>
+                      <select class="custom-select mr-sm-2" id="cmmc-family-select">
+                        <option style="color: #000;" selected>All</option>
+                        <option style="color: #000;" value="Access Control (AC)">Access Control (AC)</option>
+                        <option style="color: #000;" value="Identification and Authentication (IDA)">Identification and Authentication (IDA)</option>
+                        <option style="color: #000;" value="Media Protection (MP)">Media Protection (MP)</option>
+                        <option style="color: #000;" value="Physical Protection (PP)">Physical Protection (PP)</option>
+                        <option style="color: #000;" value="System and Communications Protection (SCP)">System and Communications Protection (SCP)</option>
+                        <option style="color: #000;" value="System and Information Integrity (SII)">System and Information Integrity (SII)</option>
+                        <option style="color: #000;" value="Awareness and Training (AT)">Awareness and Training (AT)</option>
+                        <option style="color: #000;" value="Audit and Accountability (AA)">Audit and Accountability (AA)</option>
+                        <option style="color: #000;" value="Security Assessment (SAS)">Security Assessment (SAS)</option>
+                        <option style="color: #000;" value="Configuration Management (CM)">Configuration Management (CM)</option>
+                        <option style="color: #000;" value="Incident Response (IA)">Incident Response (IA)</option>
+                        <option style="color: #000;" value=">Maintenance (MA)">Maintenance (MA)</option>
+                        <option style="color: #000;" value="Personnel Security (PS)">Personnel Security (PS)</option>
+                        <option style="color: #000;" value="Recovery (RE)">Recovery (RE)</option>
+                        <option style="color: #000;" value="Risk Management (RM)">Risk Management (RM)</option>
+                        <option style="color: #000;" value="Asset Management (AM)">Asset Management (AM)</option>
+                        <option style="color: #000;" value="Situational Awareness (SA)">Situational Awareness (SA)</option>
+                      </select>
+                    </div>
+                    <div class="col-auto my-1">
+                      <label class="mr-sm-2" style="color: rgba(255, 255, 255, 0.6);" for="inlineFormCustomSelect">CMMC Compliance</label>
+                      <select class="custom-select mr-sm-2" id="cmmc-compliance-select">
+                        <option style="color: #000;" selected>All</option>
+                        <option style="color: #000;" value="Non-Compliant">Non-Compliant</option>
+                        <option style="color: #000;" value="Compliant">Compliant</option>
+                        <option style="color: #000;" value="Non-Applicable">Non-Applicable</option>
+                      </select>
+                    </div>
+                    <div class="col-auto my-1 text-right">
+                      <button type="submit" class="btn btn-primary" id="filterbtn">Filter</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
           <table class="table table-striped table-hover table-bordered">
               <thead>
@@ -137,7 +185,7 @@
           <div class="form-group row">
             <label for="notes" class="col-sm-2 col-form-label">Notes</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="notes" value="${list.notes}">
+              <input type="text" class="form-control" id="notes" cols="80" value="${list.notes}">
             </div>
           </div>
         `
@@ -209,8 +257,16 @@
 
       var status = document.getElementById('controlStatus').value;
       var notes = document.getElementById('notes').value;
-      console.log(status)
-      console.log(notes)
+      var filterbtn = document.getElementById('filterbtn');
+
+      var level_filter = document.getElementById('cmmc-level-select');
+      level_filter = level_filter.options[level_filter.selectedIndex].value
+
+      var family_filter = document.getElementById('cmmc-family-select')
+      family_filter = family_filter.options[family_filter.selectedIndex].value
+
+      var compliance_filter = document.getElementById('cmmc-compliance-select')
+      compliance_filter = compliance_filter.options[compliance_filter.selectedIndex].value
 
       fetch(url, {
         method: 'POST',
@@ -220,7 +276,13 @@
         },
         body:JSON.stringify({'status': status, 'notes': notes})
       }).then(function(response){
-        buildTable()
+        if (level_filter == 'All' && family_filter == 'All' && compliance_filter == 'All'){
+          buildTable()
+          console.log("building table inside POST")
+        } else {
+          filterbtn.click();
+          console.log("Building filer table inside POST")
+        }
       })
 
       document.getElementById('close').click();
@@ -228,46 +290,204 @@
 
     const save = document.getElementById('save');
 
-    save.addEventListener('click', () => {
-      modal_container.classList.remove('show');
+    // save.addEventListener('click', () => {
+    //   modal_container.classList.remove('show');
+    // });
+
+    const filter = document.getElementById('filterbtn');
+
+    filter.addEventListener('click', () => {
+      var container = document.getElementById('tbody-container')
+      container.innerHTML = ''
+
+      var url = 'http://127.0.0.1:8000/api/controls-overview/'
+
+      var level_filter = document.getElementById('cmmc-level-select');
+      level_filter = level_filter.options[level_filter.selectedIndex].value
+
+      var family_filter = document.getElementById('cmmc-family-select')
+      family_filter = family_filter.options[family_filter.selectedIndex].value
+
+      var compliance_filter = document.getElementById('cmmc-compliance-select')
+      compliance_filter = compliance_filter.options[compliance_filter.selectedIndex].value
+
+
+      var new_list = []
+
+      fetch(url)
+      .then((resp) => resp.json())
+      .then(function(data){
+        console.log('Data:', data)
+
+        var list = data
+        for(var i in list){
+
+          if (level_filter == 'All' && family_filter == 'All' && compliance_filter == 'All'){
+            console.log("condition 1")
+            var item = `
+            <tr>
+              <td>${list[i].control_id}</td>
+              <td>${list[i].family}</td>
+              <td>${list[i].description}</td>
+              <td>${list[i].level}</td>
+              <td>${list[i].status}</td>
+              <td>${list[i].notes}</td>
+              <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+            </tr>`
+          } else if (level_filter == 'All' && family_filter == 'All' && compliance_filter != 'All'){
+            console.log("condition 2")
+            if (list[i].status == compliance_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              continue;
+            }
+
+          } else if(level_filter == 'All' && family_filter != 'All' && compliance_filter == 'All'){
+            console.log("condition 3")
+            if (list[i].family == family_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              continue;
+            }
+
+          } else if(level_filter == 'All' && family_filter != 'All' && compliance_filter != 'All'){
+            console.log("condition 4")
+            if (list[i].family == family_filter && list[i].status == compliance_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              continue;
+            }
+          } else if (level_filter != 'All' && family_filter == 'All' && compliance_filter == 'All'){
+            console.log("condition 5")
+            console.log("List[i]: ",list[i].level, level_filter)
+            if (list[i].level == level_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              console.log("condition 5 else")
+              continue;
+            }
+          } else if(level_filter != 'All' && family_filter == 'All' && compliance_filter != 'All'){
+            console.log("condition 6")
+            if (list[i].level == level_filter && list[i].status == compliance_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              continue;
+            }
+          } else if(level_filter != 'All' && family_filter != 'All' && compliance_filter == 'All'){
+            console.log("condition 7")
+            if (list[i].level == level_filter && list[i].family == family_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              continue;
+            }
+          } else if(level_filter != 'All' && family_filter != 'All' && compliance_filter != 'All'){
+            console.log("condition 8")
+            if (list[i].level == level_filter && list[i].status == compliance_filter && list[i].family == family_filter){
+              var item = `
+              <tr>
+                <td>${list[i].control_id}</td>
+                <td>${list[i].family}</td>
+                <td>${list[i].description}</td>
+                <td>${list[i].level}</td>
+                <td>${list[i].status}</td>
+                <td>${list[i].notes}</td>
+                <td><button type="button"class="btn btn-sm btn-outline-info edit" data-toggle="modal" data-target="#exampleModalCenter">Edit </button></td>
+              </tr>
+              `
+            } else {
+              continue;
+            }
+          } else {
+            console.log("Uh oh")
+          }
+
+          container.innerHTML += item
+          // new_list.add(i)
+          console.log(typeof(list))
+
+          if (list == new_list){
+            console.log("list == new_list")
+          } else{
+            console.log("List != new_list")
+          }
+
+          var last = list[i].control_id
+
+        }
+
+        for (var i in list){
+          var editBtn = document.getElementsByClassName('edit')[i]
+
+          editBtn.addEventListener('click', (function(item){
+            return function(){
+              editItem(item)
+            }
+          })(list[i].control_id))
+        }
+      })
     });
 
-    (function(document) {
-            'use strict';
 
-            var TableFilter = (function(myArray) {
-                var search_input;
-
-                function _onInputSearch(e) {
-                    search_input = e.target;
-                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
-                    myArray.forEach.call(tables, function(table) {
-                        myArray.forEach.call(table.tBodies, function(tbody) {
-                            myArray.forEach.call(tbody.rows, function(row) {
-                                var text_content = row.textContent.toLowerCase();
-                                var search_val = search_input.value.toLowerCase();
-                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
-                            });
-                        });
-                    });
-                }
-
-                return {
-                    init: function() {
-                        var inputs = document.getElementsByClassName('search-input');
-                        myArray.forEach.call(inputs, function(input) {
-                            input.oninput = _onInputSearch;
-                        });
-                    }
-                };
-            })(Array.prototype);
-
-            document.addEventListener('readystatechange', function() {
-                if (document.readyState === 'complete') {
-                    TableFilter.init();
-                }
-            });
-    })(document);
 
   </script>
 

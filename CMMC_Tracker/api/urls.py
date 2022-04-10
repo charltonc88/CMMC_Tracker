@@ -7,4 +7,6 @@ urlpatterns = [
     path('controls-overview/', views.controls_overview, name="controls-overview"),
     path('control-view/<str:pk>/', views.control_view, name="control-view"),
     path('control-update/<str:pk>/', views.control_update, name="update-control"),
+    path('organization-update/', views.organization_update, name="update-organization"),
+    path('userprofile-update/', views.userprofile_update, name="update-userprofile"),
 ]
