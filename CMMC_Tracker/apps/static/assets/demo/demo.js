@@ -482,7 +482,7 @@ demo = {
     // });
 
 
-    var url = 'http://127.0.0.1:8000/api/controls-overview/'
+    var url = 'http://164.92.68.77:85/api/controls-overview/'
       fetch(url)
       .then((resp) => resp.json())
       .then(function(data){
@@ -584,7 +584,7 @@ demo = {
 
       })
 
-      var url = 'http://127.0.0.1:8000/api/controls-overview/'
+      var url = 'http://164.92.68.77:85/api/controls-overview/'
       fetch(url)
       .then((resp) => resp.json())
       .then(function(data){
